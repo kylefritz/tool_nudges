@@ -1,0 +1,90 @@
+tools:
+  - name: fd
+    replaces: find
+    category: "File & Directory"
+    description: "Modern find replacement. Fast, intuitive syntax."
+    example: "fd '\\.rb$' instead of find . -name '*.rb'"
+
+  - name: eza
+    replaces: ls
+    category: "File & Directory"
+    description: "Modern ls with git status, tree view, colors."
+    example: "eza --tree --git instead of ls -la"
+
+  - name: bat
+    replaces: cat
+    category: "File & Directory"
+    description: "cat with syntax highlighting and line numbers."
+    example: "bat file.txt instead of cat file.txt"
+
+  - name: zoxide
+    replaces: cd
+    category: "File & Directory"
+    description: "Smarter cd that learns your directories."
+    example: "z motzi instead of cd ~/code/motzi"
+
+  - name: rg
+    replaces: grep
+    category: "Data & Text"
+    description: "Blazing fast grep with sane defaults."
+    example: "rg 'pattern' instead of grep -r 'pattern' ."
+
+  - name: fzf
+    replaces: ""
+    category: "Data & Text"
+    description: "Fuzzy finder for everything. Ctrl+R for history."
+    example: "history | fzf or vim (fzf)"
+
+  - name: sd
+    replaces: sed
+    category: "Data & Text"
+    description: "Simpler sed for find-and-replace."
+    example: "sd 'foo' 'bar' file.txt instead of sed -i 's/foo/bar/g' file.txt"
+
+  - name: xsv
+    replaces: ""
+    category: "Data & Text"
+    description: "Fast CSV toolkit — filter, join, stats."
+    example: "xsv stats data.csv or xsv select name,age data.csv"
+
+  - name: delta
+    replaces: ""
+    category: "Git"
+    description: "Beautiful git diffs with syntax highlighting."
+    example: "git diff | delta (or set as default pager)"
+
+  - name: lazygit
+    replaces: ""
+    category: "Git"
+    description: "Terminal UI for git. Interactive rebases, staging hunks."
+    example: "lazygit in any repo"
+
+  - name: btop
+    replaces: top
+    category: "System & Monitoring"
+    description: "Beautiful system monitor."
+    example: "btop instead of top or htop"
+
+  - name: dust
+    replaces: du
+    category: "System & Monitoring"
+    description: "Intuitive disk usage viewer."
+    example: "dust instead of du -sh *"
+
+  - name: hyperfine
+    replaces: ""
+    category: "System & Monitoring"
+    description: "CLI benchmarking tool."
+    example: "hyperfine 'rg foo' 'grep -r foo'"
+
+  - name: http
+    replaces: curl
+    category: "HTTP & APIs"
+    description: "Friendlier curl for API testing (httpie)."
+    example: "http GET api.example.com instead of curl -s api.example.com"
+
+  - name: curlie
+    replaces: ""
+    category: "HTTP & APIs"
+    description: "curl with httpie's readability."
+    example: "curlie GET api.example.com"
