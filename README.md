@@ -26,6 +26,7 @@ The setup script will:
 | `new_tools_reminder.fish` | Startup tips + old-command wrapper functions |
 | `new_tools.fish` | `new_tools` catalog command |
 | `setup.sh` | Symlinks + optional tool installation |
+| `uninstall.sh` | Removes fish symlinks (does not uninstall tools) |
 
 ## Tools included
 
@@ -49,9 +50,8 @@ The setup script will:
 
 ## Uninstall
 
-Remove the symlinks:
-
 ```sh
-rm ~/.config/fish/conf.d/new_tools_reminder.fish
-rm ~/.config/fish/functions/new_tools.fish
+./uninstall.sh
 ```
+
+This removes the fish symlinks. It does not uninstall any Homebrew packages.
