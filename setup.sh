@@ -72,33 +72,33 @@ fi
 
 # Check for Homebrew
 if ! command -v brew &>/dev/null; then
-    echo "Homebrew not found. Install missing tools manually:"
+    BREW_PACKAGES=()
     for tool in "${MISSING[@]}"; do
-        brew_name="${BREW_NAMES[$tool]:-$tool}"
-        echo "  brew install $brew_name"
+        BREW_PACKAGES+=("${BREW_NAMES[$tool]:-$tool}")
     done
+    echo "Homebrew not found. Install missing tools manually:"
+    echo "  brew install ${BREW_PACKAGES[*]}"
     exit 0
 fi
 
-echo "Would you like to install the ${#MISSING[@]} missing tool(s)? [y/N] "
+echo "Would you like to install the ${#MISSING[@]} missing tool(s)? [Y/n] "
 read -r answer
 
-if [[ "$answer" =~ ^[Yy] ]]; then
-    for tool in "${MISSING[@]}"; do
-        brew_name="${BREW_NAMES[$tool]:-$tool}"
-        echo ""
-        echo "--- Installing $tool (brew install $brew_name) ---"
-        brew install "$brew_name"
-    done
+BREW_PACKAGES=()
+for tool in "${MISSING[@]}"; do
+    BREW_PACKAGES+=("${BREW_NAMES[$tool]:-$tool}")
+done
+
+if [[ ! "$answer" =~ ^[Nn] ]]; then
+    echo ""
+    echo "--- Installing ${#BREW_PACKAGES[@]} tool(s): ${BREW_PACKAGES[*]} ---"
+    brew install "${BREW_PACKAGES[@]}"
     echo ""
     echo "All tools installed!"
 else
     echo ""
     echo "Skipped. You can install them later with:"
-    for tool in "${MISSING[@]}"; do
-        brew_name="${BREW_NAMES[$tool]:-$tool}"
-        echo "  brew install $brew_name"
-    done
+    echo "  brew install ${BREW_PACKAGES[*]}"
 fi
 
 echo ""

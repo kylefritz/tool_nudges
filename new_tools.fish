@@ -1,8 +1,8 @@
 # tool_nudges — CLI tools catalog
-# Canonical location: ~/code/tool_nudges/
+# Path resolved dynamically via symlink
 # Symlinked from: ~/.config/fish/functions/new_tools.fish
 function new_tools --description "Print the new CLI tools catalog"
-    set -l tools_file ~/code/tool_nudges/new_tools.yaml
+    set -l tools_file (path dirname (path resolve (status filename)))/new_tools.yaml
     if not test -f $tools_file
         echo "Tools database not found at $tools_file"
         return 1

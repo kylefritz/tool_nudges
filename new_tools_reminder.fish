@@ -1,12 +1,12 @@
 # tool_nudges — startup tips + old-command nudges
-# Canonical location: ~/code/tool_nudges/
+# Path resolved dynamically via symlink
 # Symlinked from: ~/.config/fish/conf.d/new_tools_reminder.fish
 
 if status is-interactive
 
     # --- Startup tip ---
     # Pick a random tool tip from the YAML db
-    set -l tools_file ~/code/tool_nudges/new_tools.yaml
+    set -l tools_file (path dirname (path resolve (status filename)))/new_tools.yaml
     if test -f $tools_file
         # Extract tool names using string replace in filter mode (-f drops non-matching lines)
         set -l tool_names (string replace -rf '^\s+- name: (.+)' '$1' < $tools_file)
