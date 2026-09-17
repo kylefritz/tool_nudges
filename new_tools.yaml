@@ -88,3 +88,21 @@ tools:
     category: "HTTP & APIs"
     description: "curl with httpie's readability."
     example: "curlie GET api.example.com"
+
+  - name: lw
+    replaces: ""
+    category: "Personal Workflow"
+    description: "List av worktrees and repos with branch, status, and age."
+    example: "lw to see all worktrees and repos at a glance"
+
+  - name: kill_port
+    replaces: ""
+    category: "Personal Workflow"
+    description: "Kill processes listening on TCP ports (SIGTERM, then SIGKILL)."
+    example: "kill_port 3000 or kill_port alone for an interactive TUI of dev servers"
+
+  - name: av-pr-query
+    replaces: ""
+    category: "Personal Workflow"
+    description: "Query commits, open PRs, and PR details for the team (team.yaml) in aurora-tech/av."
+    example: "~/non_code/scripts/av-pr-query.ts open or av-pr-query.ts commits 2026-06-01"
