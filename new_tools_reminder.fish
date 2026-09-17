@@ -5,47 +5,50 @@
 if status is-interactive
 
     # --- Startup tip ---
-    # Pick a random tool tip from the YAML db
-    set -l tools_file (path dirname (path resolve (status filename)))/new_tools.yaml
-    if test -f $tools_file
-        # Extract tool names using string replace in filter mode (-f drops non-matching lines)
-        set -l tool_names (string replace -rf '^\s+- name: (.+)' '$1' < $tools_file)
-        if test (count $tool_names) -gt 0
-            set -l idx (random 1 (count $tool_names))
-            set -l tool $tool_names[$idx]
+    # isatty guard: keeps the tip out of captured output for `ssh -t host cmd`
+    if isatty stdout
+        # Pick a random tool tip from the YAML db
+        set -l tools_file (path dirname (path resolve (status filename)))/new_tools.yaml
+        if test -f $tools_file
+            # Extract tool names using string replace in filter mode (-f drops non-matching lines)
+            set -l tool_names (string replace -rf '^\s+- name: (.+)' '$1' < $tools_file)
+            if test (count $tool_names) -gt 0
+                set -l idx (random 1 (count $tool_names))
+                set -l tool $tool_names[$idx]
 
-            # Extract this tool's description and example
-            set -l desc ""
-            set -l example ""
-            set -l found 0
-            while read -l line
-                if string match -q "  - name: $tool" -- $line
-                    set found 1
-                else if test $found -eq 1
-                    if string match -q "  - name:*" -- $line
-                        break
+                # Extract this tool's description and example
+                set -l desc ""
+                set -l example ""
+                set -l found 0
+                while read -l line
+                    if string match -q "  - name: $tool" -- $line
+                        set found 1
+                    else if test $found -eq 1
+                        if string match -q "  - name:*" -- $line
+                            break
+                        end
+                        if string match -qr '^\s+description: "(.+)"' -- $line
+                            set desc (string replace -r '^\s+description: "(.+)"' '$1' -- $line)
+                        end
+                        if string match -qr '^\s+example: "(.+)"' -- $line
+                            set example (string replace -r '^\s+example: "(.+)"' '$1' -- $line)
+                        end
                     end
-                    if string match -qr '^\s+description: "(.+)"' -- $line
-                        set desc (string replace -r '^\s+description: "(.+)"' '$1' -- $line)
-                    end
-                    if string match -qr '^\s+example: "(.+)"' -- $line
-                        set example (string replace -r '^\s+example: "(.+)"' '$1' -- $line)
-                    end
-                end
-            end < $tools_file
+                end < $tools_file
 
-            # Display the tip
-            set_color bryellow
-            printf "💡 "
-            set_color normal
-            set_color --bold
-            printf "%s" $tool
-            set_color normal
-            printf " — %s\n" $desc
-            if test -n "$example"
-                set_color brblack
-                printf "   %s\n" $example
+                # Display the tip
+                set_color bryellow
+                printf "💡 "
                 set_color normal
+                set_color --bold
+                printf "%s" $tool
+                set_color normal
+                printf " — %s\n" $desc
+                if test -n "$example"
+                    set_color brblack
+                    printf "   %s\n" $example
+                    set_color normal
+                end
             end
         end
     end
